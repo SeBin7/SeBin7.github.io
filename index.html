@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SeBin | Embedded SW & AI Portfolio</title>
+  <meta name="description" content="Embedded SW & AI Developer Portfolio – Raspberry Pi 5 + Hailo‑8, OpenVINO, Intel Arc GPU, Road_Vision, Quant_Lab, Python_Basic" />
+  <meta property="og:title" content="SeBin | Embedded SW & AI Portfolio" />
+  <meta property="og:description" content="Real‑time road surface classification on Raspberry Pi + Hailo‑8, quantization labs, and Python fundamentals." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#0f1115" />
+  <style>
+    /* ===== Reset & Base ===== */
+    *, *::before, *::after { box-sizing: border-box; }
+    :root{
+      --bg:#0f1115; --panel:#141925; --muted:#9fb0c1; --text:#e6edf3;
+      --accent:#7aa2f7; --accent2:#f7768e; --ok:#9ece6a; --warn:#e0af68; --border:#293142;
+      --shadow:0 10px 30px rgba(0,0,0,0.35);
+    }
+    html, body { margin:0; padding:0; background:var(--bg); color:var(--text); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; line-height:1.6; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { max-width: 100%; display: block; }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+
+    /* ===== Layout ===== */
+    .container { width:min(1100px, 92%); margin:0 auto; }
+    header{ position:sticky; top:0; backdrop-filter:saturate(110%) blur(6px); background:rgba(15,17,21,.7); border-bottom:1px solid var(--border); z-index:10; }
+    nav{ display:flex; align-items:center; justify-content:space-between; padding:.85rem 0; }
+    .brand{ font-weight:800; letter-spacing:.2px; }
+    .brand b{ color:var(--accent); }
+    .nav-links a{ margin-left:1rem; opacity:.9; }
+
+    /* ===== Hero ===== */
+    .hero{ padding:64px 0 28px; }
+    .hero h1{ font-size: clamp(28px, 4vw, 44px); line-height:1.25; margin:0 0 .5rem; }
+    .hero p.lead{ color:var(--muted); font-size: clamp(15px, 2vw, 18px); margin:.25rem 0 1rem; }
+    .tags{ display:flex; flex-wrap:wrap; gap:.5rem; margin:1rem 0 0; }
+    .tag{ border:1px solid var(--border); color:var(--muted); padding:.35rem .6rem; border-radius:999px; font-size:12px; }
+    .cta{ display:flex; gap:.75rem; margin-top:1.2rem; }
+    .btn{ display:inline-block; padding:.7rem 1rem; border-radius:12px; background:var(--accent); color:#0b1020; font-weight:700; box-shadow:var(--shadow); }
+    .btn.secondary{ background:transparent; color:var(--text); border:1px solid var(--border); box-shadow:none; }
+
+    /* ===== Sections ===== */
+    section{ padding:40px 0; border-top:1px dashed var(--border); }
+    h2{ font-size: clamp(22px, 2.8vw, 28px); margin:0 0 1rem; }
+    .muted{ color:var(--muted); }
+
+    /* ===== Cards Grid ===== */
+    .grid{ display:grid; grid-template-columns: repeat(12, 1fr); gap:18px; }
+    .col-6{ grid-column: span 6; }
+    .col-4{ grid-column: span 4; }
+    .col-12{ grid-column: span 12; }
+    @media (max-width: 900px){ .col-6,.col-4{ grid-column: span 12; } }
+
+    .card{ background:linear-gradient(180deg, rgba(20,25,37,.55), rgba(20,25,37,.25)); border:1px solid var(--border); border-radius:16px; padding:18px; box-shadow: var(--shadow); }
+    .card h3{ margin:.2rem 0 .6rem; font-size:18px; }
+    .card .meta{ color:var(--muted); font-size:13px; margin-bottom:.3rem; }
+    .card .pill{ display:inline-block; font-size:11px; padding:.25rem .5rem; border-radius:999px; border:1px solid var(--border); color:var(--muted); margin-right:.35rem; }
+
+    /* ===== Timeline ===== */
+    .timeline{ position:relative; margin:1rem 0 0; padding-left:16px; }
+    .timeline::before{ content:""; position:absolute; left:4px; top:0; bottom:0; width:2px; background:var(--border); }
+    .t-item{ position:relative; padding:0 0 1rem 18px; }
+    .t-item::before{ content:""; position:absolute; left:-3px; top:.35rem; width:10px; height:10px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 4px rgba(122,162,247,.15); }
+    .t-title{ font-weight:700; }
+    .t-meta{ color:var(--muted); font-size:13px; }
+
+    /* ===== Footer ===== */
+    footer{ padding:30px 0 60px; color:var(--muted); text-align:center; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav aria-label="Primary">
+        <div class="brand">SeBin <b>Portfolio</b></div>
+        <div class="nav-links">
+          <a href="#projects">Projects</a>
+          <a href="#skills">Skills</a>
+          <a href="#experience">Experience</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- ===== Hero ===== -->
+    <section class="hero" id="home">
+      <h1>Embedded SW & AI Developer<br />Raspberry Pi 5 + Hailo‑8 · OpenVINO · Intel Arc GPU</h1>
+      <p class="lead">Building real‑time road surface classification (Road_Vision), quantization labs (Quant_Lab), and Python learning resources (Python_Basic).</p>
+      <div class="tags" aria-label="Highlights">
+        <span class="tag">Edge AI</span>
+        <span class="tag">OpenVINO</span>
+        <span class="tag">Hailo‑8</span>
+        <span class="tag">Intel Arc GPU</span>
+        <span class="tag">ROS2</span>
+        <span class="tag">Grad‑CAM / Occlusion</span>
+      </div>
+      <div class="cta">
+        <a class="btn" href="#projects">View Projects</a>
+        <a class="btn secondary" href="https://github.com/SeBin7" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </section>
+
+    <!-- ===== Projects ===== -->
+    <section id="projects" aria-labelledby="projects-title">
+      <h2 id="projects-title">🚀 Projects</h2>
+      <p class="muted">Key repositories and demos. Each card links to the repo.</p>
+      <div class="grid" role="list">
+        <article class="card col-6" role="listitem">
+          <div class="meta">Raspberry Pi 5 + Hailo‑8 · Real‑time · 2025</div>
+          <h3><a href="https://github.com/SeBin7/Road_Vision" target="_blank" rel="noopener">Road_Vision</a></h3>
+          <p>Real‑time road surface classification with CNN → GRU → MLP pipeline, 3/4/5‑channel variants, EMA smoothing, Grad‑CAM overlays, and CARLA simulation.</p>
+          <p>
+            <span class="pill">MobileNetV3</span>
+            <span class="pill">YOLO‑Seg ROI</span>
+            <span class="pill">OpenVINO</span>
+            <span class="pill">Hailo SDK</span>
+          </p>
+        </article>
+        <article class="card col-6" role="listitem">
+          <div class="meta">Quantization · FP32→FP8/INT8 · 2025</div>
+          <h3><a href="https://github.com/SeBin7/Quant_Lab" target="_blank" rel="noopener">Quant_Lab</a></h3>
+          <p>Hands‑on experiments on FP/INT formats, error histograms, ULP curves, and calibration strategies; code modules for FP8/INT8 transforms and benchmarking.</p>
+          <p>
+            <span class="pill">FP8</span>
+            <span class="pill">INT8</span>
+            <span class="pill">OpenVINO</span>
+            <span class="pill">Bench</span>
+          </p>
+        </article>
+        <article class="card col-6" role="listitem">
+          <div class="meta">Education · Python · 2024–2025</div>
+          <h3><a href="https://github.com/SeBin7/Python_Basic" target="_blank" rel="noopener">Python_Basic</a></h3>
+          <p>Python fundamentals & coding‑test repository with clean examples, OOP patterns, and mini‑projects (e.g., Attention patterns visualizer).</p>
+          <p>
+            <span class="pill">Python</span>
+            <span class="pill">OOP</span>
+            <span class="pill">Coding Test</span>
+          </p>
+        </article>
+        <article class="card col-6" role="listitem">
+          <div class="meta">Simulation · CARLA · 2025</div>
+          <h3><a href="https://github.com/SeBin7/Road_Vision" target="_blank" rel="noopener">CARLA Demo</a></h3>
+          <p>Live demo pipeline with autopilot/manual modes, weather cycling, HUD overlays for predictions, and 20‑min capture segments with ffmpeg split.</p>
+          <p>
+            <span class="pill">CARLA 0.9.15</span>
+            <span class="pill">HUD</span>
+            <span class="pill">ffmpeg</span>
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== Skills ===== -->
+    <section id="skills" aria-labelledby="skills-title">
+      <h2 id="skills-title">🧰 Skills</h2>
+      <div class="grid">
+        <div class="card col-4">
+          <h3>Edge & Frameworks</h3>
+          <p class="muted">Raspberry Pi 5, Hailo‑8, OpenVINO, ROS2</p>
+        </div>
+        <div class="card col-4">
+          <h3>Modeling</h3>
+          <p class="muted">CNN (MobileNetV3), GRU/MLP, YOLO‑Seg, DeepLabV3+</p>
+        </div>
+        <div class="card col-4">
+          <h3>Tooling</h3>
+          <p class="muted">Intel Arc GPU (training), Docker, GitHub Actions</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Experience / Timeline ===== -->
+    <section id="experience" aria-labelledby="exp-title">
+      <h2 id="exp-title">📈 Experience</h2>
+      <div class="timeline" aria-label="timeline">
+        <div class="t-item">
+          <div class="t-title">Intel Smart AI Master – Embedded AI Track</div>
+          <div class="t-meta">2025 · Data → Training → Inference → Edge Deployment</div>
+          <div class="muted">Team lead of “Connection”, GitHub workflow, Dockerization, quantization flows.</div>
+        </div>
+        <div class="t-item">
+          <div class="t-title">Road_Vision Project Lead</div>
+          <div class="t-meta">2025 · Raspberry Pi 5 + Hailo‑8</div>
+          <div class="muted">CNN feature extractor → GRU temporal modeling; Grad‑CAM & occlusion visualization; CARLA demo.</div>
+        </div>
+        <div class="t-item">
+          <div class="t-title">Quantization Lab Author</div>
+          <div class="t-meta">2025 · FP32→FP8/INT8</div>
+          <div class="muted">Error analysis, calibration datasets, FP/INT transforms modules and benchmarks.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Contact ===== -->
+    <section id="contact" aria-labelledby="contact-title">
+      <h2 id="contact-title">📮 Contact</h2>
+      <p class="muted">GitHub과 블로그에서 더 많은 작업을 확인하실 수 있어요.</p>
+      <p>
+        <a class="btn" href="https://github.com/SeBin7" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn secondary" href="https://example.tistory.com" target="_blank" rel="noopener">Blog</a>
+        <!-- Optional: add email link
+        <a class="btn secondary" href="mailto:you@example.com">Email</a>
+        -->
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">© 2025 SeBin · Built with GitHub Pages</div>
+  </footer>
+
+  <script>
+    // Accessibility enhancement: close underline on keyboard focus
+    document.querySelectorAll('a').forEach(a=>{
+      a.addEventListener('keyup', e=>{ if(e.key==='Enter'){ a.blur(); } });
+    });
+  </script>
+</body>
+</html>
