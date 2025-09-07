@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Road_Vision – HTML Slides (Reveal.js)</title>
+
+  <!-- Reveal.js via CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css" id="theme">
+
+  <style>
+    /* Extra polish for layout & readability */
+    .footnote { font-size: .55em; color: #9fb0c1; }
+    .tag { border:1px solid #2a3240; padding:.15em .5em; border-radius:999px; margin-right:.3em; font-size:.6em; }
+    .pill { background:#11151c; border:1px solid #2a3240; padding:.2em .6em; border-radius:999px; font-size:.75em; }
+    .twocol { display:flex; gap:24px; align-items:flex-start; }
+    .twocol > div { flex:1; }
+    pre code{ font-size: .8em; }
+    svg { max-width: 100%; height: auto; display:block; }
+    /* Ensure each slide content is vertically centered by default */
+    section > h2, section > h3, section > p, section > ul, section > div { margin-left:auto; margin-right:auto; }
+    section.centered { display:flex !important; flex-direction:column; justify-content:center; }
+    .caption-center { text-align:center; margin-top:10px; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- Slide 1: Cover -->
+      <section class="centered">
+        <h2>Road_Vision</h2>
+        <p>Real-Time Road Surface Classification on <b>Raspberry Pi 5 + Hailo-8</b></p>
+        <p>
+          <span class="tag">Edge AI</span>
+          <span class="tag">OpenVINO</span>
+          <span class="tag">Hailo-8</span>
+          <span class="tag">MobileNetV3</span>
+          <span class="tag">GRU</span>
+          <span class="tag">YOLO-Seg ROI</span>
+        </p>
+        <p class="footnote">Intel Smart AI Master · 2025</p>
+      </section>
+
+      <!-- Slide 2: Problem Statement -->
+      <section class="centered">
+        <h3>문제 정의 (Problem)</h3>
+        <ul>
+          <li>도로 환경에서 노면 상태(건조/젖음/눈/얼음/요철/포트홀)를 <b>실시간</b>으로 파악</li>
+          <li><b>엣지 제약</b>: 제한된 연산/메모리, 전력, I/O</li>
+          <li>안전 보조 및 자율주행 전처리를 위한 <b>경량·안정 추론</b> 필요</li>
+        </ul>
+      </section>
+
+      <!-- Slide 3: Solution Overview with centered, stretchable diagram -->
+      <section class="centered" data-auto-animate>
+        <h3>솔루션 개요 (Solution Overview)</h3>
+
+        <!-- r-stretch makes the diagram fill available space while staying centered -->
+        <div class="r-stretch" style="display:flex;align-items:center;justify-content:center;">
+          <svg viewBox="0 0 980 220" aria-label="Pipeline diagram">
+            <defs>
+              <linearGradient id="g1" x1="0" x2="1">
+                <stop offset="0" stop-color="#7aa2f7"/><stop offset="1" stop-color="#9ece6a"/>
+              </linearGradient>
+            </defs>
+
+            <rect x="10" y="20" width="170" height="60" rx="10" fill="#0f141f" stroke="#2a3550" />
+            <text x="95" y="55" fill="#e6edf3" text-anchor="middle" font-size="14">Video Frames</text>
+
+            <rect x="200" y="20" width="200" height="60" rx="10" fill="#0f141f" stroke="#2a3550" />
+            <text x="300" y="44" fill="#e6edf3" text-anchor="middle" font-size="14">ROI (YOLO-Seg)</text>
+            <text x="300" y="62" fill="#9fb0c1" text-anchor="middle" font-size="12">crop / 3-5ch fusion</text>
+
+            <rect x="420" y="20" width="170" height="60" rx="10" fill="#0f141f" stroke="#2a3550" />
+            <text x="505" y="44" fill="#e6edf3" text-anchor="middle" font-size="14">CNN</text>
+            <text x="505" y="62" fill="#9fb0c1" text-anchor="middle" font-size="12">MobileNetV3 (Hailo-8)</text>
+
+            <rect x="610" y="20" width="110" height="60" rx="10" fill="#0f141f" stroke="#2a3550" />
+            <text x="665" y="55" fill="#e6edf3" text-anchor="middle" font-size="14">GRU</text>
+
+            <rect x="740" y="20" width="220" height="60" rx="10" fill="#0f141f" stroke="#2a3550" />
+            <text x="850" y="44" fill="#e6edf3" text-anchor="middle" font-size="14">MLP + EMA</text>
+            <text x="850" y="62" fill="#9fb0c1" text-anchor="middle" font-size="12">stabilized output</text>
+
+            <line x1="180" y1="50" x2="200" y2="50" stroke="url(#g1)" stroke-width="3"/>
+            <line x1="400" y1="50" x2="420" y2="50" stroke="url(#g1)" stroke-width="3"/>
+            <line x1="590" y1="50" x2="610" y2="50" stroke="url(#g1)" stroke-width="3"/>
+            <line x1="720" y1="50" x2="740" y2="50" stroke="url(#g1)" stroke-width="3"/>
+
+            <rect x="10" y="110" width="460" height="90" rx="10" fill="#0f141f" stroke="#2a3550" />
+            <text x="240" y="135" fill="#e6edf3" text-anchor="middle" font-size="14">Preprocess & Dataset</text>
+            <text x="240" y="154" fill="#9fb0c1" text-anchor="middle" font-size="12">video → 10-step sequences (npz)</text>
+            <text x="240" y="172" fill="#9fb0c1" text-anchor="middle" font-size="12">calibration subset (INT8/FP8)</text>
+
+            <rect x="490" y="110" width="480" height="90" rx="10" fill="#0f141f" stroke="#2a3550" />
+            <text x="730" y="135" fill="#e6edf3" text-anchor="middle" font-size="14">Visualization</text>
+            <text x="730" y="154" fill="#9fb0c1" text-anchor="middle" font-size="12">Grad-CAM, occlusion, HUD</text>
+            <text x="730" y="172" fill="#9fb0c1" text-anchor="middle" font-size="12">CARLA demo & recording</text>
+          </svg>
+        </div>
+        <p class="caption-center">
+          <span class="pill">3/4/5ch variants</span>
+          <span class="pill">Grad-CAM</span>
+          <span class="pill">Occlusion</span>
+          <span class="pill">HUD</span>
+        </p>
+      </section>
+
+      <!-- Slide 4: Tech Stack -->
+      <section class="centered">
+        <h3>기술 스택 (Tech Stack)</h3>
+        <div class="twocol">
+          <div>
+            <ul>
+              <li>HW: Raspberry Pi 5, Hailo-8, Intel Arc GPU (training)</li>
+              <li>SW: PyTorch, <b>OpenVINO</b>, ROS2, Docker</li>
+              <li>Modeling: MobileNetV3, GRU, YOLO-Seg ROI, EMA</li>
+            </ul>
+          </div>
+          <div>
+            <ul>
+              <li>Explainability: Grad-CAM, Occlusion sensitivity</li>
+              <li>Streaming UI: HUD overlay, hysteresis</li>
+              <li>CI/CD: GitHub Actions (optional)</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 5: Dataset & Pipeline -->
+      <section class="centered">
+        <h3>데이터 & 파이프라인</h3>
+        <div class="twocol">
+          <div>
+            <ul>
+              <li>Videos → sliding window → <b>10-frame sequences</b> (224×224)</li>
+              <li>Inputs: 3-ch RGB / 4-ch RGB+edge / 5-ch RGB+edge+reflection</li>
+              <li>Calibration subset for INT8/FP8 experiments</li>
+            </ul>
+          </div>
+          <div>
+<pre><code class="language-python"># Pseudocode (English-only comments)
+from pathlib import Path
+import cv2, numpy as np
+
+# iterate video frames and pack 10-step windows to npz
+# save sequences for training & calibration
+</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 6: Modeling Details -->
+      <section class="centered">
+        <h3>모델 상세 (Modeling)</h3>
+        <ul>
+          <li><b>CNN:</b> MobileNetV3-Small feature extractor (global pooling), ROI by YOLO-Seg</li>
+          <li><b>Temporal:</b> GRU hidden states → MLP, EMA + hysteresis</li>
+          <li><b>Variants:</b> 3/4/5-channel inputs for robustness</li>
+          <li><b>Explainability:</b> Grad-CAM, occlusion maps, hidden attention overlay</li>
+        </ul>
+      </section>
+
+      <!-- Slide 7: Results -->
+      <section class="centered">
+        <h3>결과 (Results)</h3>
+        <ul>
+          <li>Throughput: real-time target ≥ 25 FPS (Raspberry Pi 5 + Hailo-8)</li>
+          <li>Latency: low tens of ms (pipeline dependent)</li>
+          <li>Accuracy: depends on dataset split (see repo)</li>
+        </ul>
+        <p class="footnote">* Replace with your actual metrics when finalized.</p>
+      </section>
+
+      <!-- Slide 8: Visualization / Demo -->
+      <section class="centered">
+        <h3>시각화 & 데모</h3>
+        <ul>
+          <li>Grad-CAM / Occlusion overlay screenshots</li>
+          <li>HUD with predictions, warnings, speed/mode</li>
+          <li>CARLA live demo capture (GIF/YouTube)</li>
+        </ul>
+        <p class="footnote">Insert images or video links as needed.</p>
+      </section>
+
+      <!-- Slide 9: Challenges & Learnings -->
+      <section class="centered">
+        <h3>도전 과제 & 배운 점</h3>
+        <ul>
+          <li>Edge constraints → model & pipeline optimization</li>
+          <li>Hailo-8 / OpenVINO calibration & deployment</li>
+          <li>Streaming stability (EMA, hysteresis) & UI design</li>
+          <li>Team collaboration: GitHub workflow, code review</li>
+        </ul>
+      </section>
+
+      <!-- Slide 10: Links -->
+      <section class="centered">
+        <h3>링크</h3>
+        <ul>
+          <li><a href="https://github.com/SeBin7/Road_Vision" target="_blank" rel="noopener">GitHub: Road_Vision</a></li>
+          <li>Poster / Slides (PDF): add link</li>
+          <li>Demo video (YouTube): add link</li>
+        </ul>
+        <p class="footnote">Keyboard: ← → to navigate · Press <b>F</b> for fullscreen</p>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Reveal.js scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: true,
+      transition: 'slide'
+      // For PDF export: open with ?print-pdf and print to PDF
+    });
+  </script>
+</body>
+</html>
