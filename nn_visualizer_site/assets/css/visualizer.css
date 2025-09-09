@@ -1,0 +1,53 @@
+/* ===================================================
+   Neural Network Visualizer — CSS (Comments in English)
+=================================================== */
+:root{ --bg:#0b1020; --panel:#0f1630; --text:#e6edf3; --muted:#9fb0c1; --accent:#7aa2f7; --edge:#2b365e; --edge-hi:#7aa2f7; --border:#1c2440; }
+*{ box-sizing:border-box }
+html,body{ height:100% }
+body{ margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Noto Sans KR,sans-serif; background:var(--bg); color:var(--text) }
+a{ color:var(--accent); text-decoration:none }
+
+/* Header */
+.site-header{ position:sticky; top:0; z-index:10; background:#0e1531cc; backdrop-filter:blur(6px); border-bottom:1px solid var(--border) }
+.wrap{ max-width:1200px; margin:0 auto; padding:16px }
+h1{ margin:8px 0 0 0 }
+.sub{ color:var(--muted); margin:8px 0 0 0 }
+
+/* Layout */
+.grid{ display:grid; grid-template-columns: 1.2fr .8fr; gap:16px; align-items:start; margin-top:16px }
+.panel{ background:var(--panel); border:1px solid var(--border); border-radius:16px; padding:16px }
+
+/* Controls */
+.controls{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:10px }
+select, button{ background:#101737; color:var(--text); border:1px solid #2a3a66; border-radius:10px; padding:8px 10px; cursor:pointer }
+button:hover, select:hover{ background:#0e1431 }
+
+/* Legend */
+.legend{ display:flex; gap:8px; flex-wrap:wrap; font-size:12px; color:var(--muted); margin-bottom:10px }
+.badge{ border:1px solid #2a3a66; border-radius:999px; padding:2px 8px }
+
+/* Stage */
+.stage{ aspect-ratio: 16/9; width:100%; background:linear-gradient(180deg,#0b1020,#0a1020); border:1px solid var(--border); border-radius:16px; position:relative; overflow:hidden }
+svg{ width:100%; height:100% }
+
+/* Nodes */
+.node{ fill:#111a39; stroke:#2a3a66; stroke-width:1.5px; transition:filter .2s, transform .2s }
+.node:hover{ filter:drop-shadow(0 0 12px #7aa2f7aa) }
+.node text{ font-size:11px; fill:#c9d6ff }
+.node .small{ font-size:9px; fill:#8ea0d1 }
+
+/* Edges */
+.edge{ stroke: var(--edge); stroke-width:1.2; fill:none; opacity:.9 }
+.edge-hi{ stroke: var(--edge-hi); stroke-width:2.2; filter: drop-shadow(0 0 6px #7aa2f7aa) }
+
+/* Info panel */
+.info h3{ margin:0 0 6px 0 }
+.info p{ margin:0 0 8px 0; color:var(--muted) }
+.kv{ display:grid; grid-template-columns: .6fr 1fr; gap:6px; font-size:13px }
+.kv div:nth-child(odd){ color:#9fb0c1 }
+
+/* Tooltip */
+.tooltip{ position:absolute; pointer-events:none; background:#0a1226; border:1px solid #223257; color:#dbe6ff; padding:6px 8px; border-radius:8px; font-size:12px; transform: translate(-50%, -120%); opacity:0; transition:opacity .12s; white-space:nowrap }
+
+/* Responsive */
+@media (max-width: 960px){ .grid{ grid-template-columns: 1fr } }

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Neural Network Visualizer — Road_Vision ready</title>
+  <meta name="description" content="Interactive SVG visualizer for CNN→GRU→MLP pipelines; JSON-editable and animated.">
+  <link rel="stylesheet" href="/assets/css/visualizer.css" />
+  <script defer src="/assets/js/visualizer.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1>Neural Network Visualizer</h1>
+      <p class="sub">Interactive SVG graph of layers, adaptable to your pipeline (CNN → GRU → MLP).</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="grid">
+      <!-- Left: Canvas -->
+      <section class="panel">
+        <div class="controls">
+          <label>Preset:
+            <select id="preset">
+              <option value="roadvision">Road_Vision (CNN→GRU→MLP, 5‑ch)</option>
+              <option value="mlp">MLP (3 layers)</option>
+              <option value="cnn">CNN (Conv→Pool→FC)</option>
+              <option value="vit">ViT (patch→encoder→head)</option>
+              <option value="auto">Autoencoder</option>
+            </select>
+          </label>
+          <button id="animate">Animate forward</button>
+          <button id="reset">Reset</button>
+        </div>
+        <div class="legend">
+          <span class="badge">Hover node: highlight fan-in/out</span>
+          <span class="badge">Edit JSON → Render</span>
+          <span class="badge">Animate: left → right pulse</span>
+        </div>
+        <div class="stage" id="stage">
+          <svg id="svg" viewBox="0 0 1200 675" preserveAspectRatio="xMidYMid meet"></svg>
+          <div id="tooltip" class="tooltip"></div>
+        </div>
+      </section>
+
+      <!-- Right: JSON + Info -->
+      <aside class="panel">
+        <div class="controls">
+          <button id="render">Render JSON</button>
+          <button id="pretty">Pretty</button>
+        </div>
+        <textarea id="modelJson" spellcheck="false"></textarea>
+        <div class="info">
+          <h3>Layer Info</h3>
+          <p id="layerTitle">Hover a node to inspect.</p>
+          <div class="kv" id="kv"></div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">© 2025 SeBin — Neural Network Visualizer</div>
+  </footer>
+
+  <noscript><style>.controls button{display:none}</style></noscript>
+</body>
+</html>
