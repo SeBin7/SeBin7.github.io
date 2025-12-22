@@ -1,9 +1,9 @@
 1:"$Sreact.fragment"
-2:I[7957,[],"ClientPageRoot"]
-3:I[9261,["944","static/chunks/app/road-vision/page-5de94ca91e55b36e.js"],"default"]
-6:I[370,[],"OutletBoundary"]
+2:I[36011,["/_next/static/chunks/281bac03e7aa5733.js","/_next/static/chunks/6ddb7c04e2aa3207.js"],"ClientPageRoot"]
+3:I[35672,["/_next/static/chunks/d073d44c0adb2f4e.js"],"default"]
+6:I[53323,["/_next/static/chunks/281bac03e7aa5733.js","/_next/static/chunks/6ddb7c04e2aa3207.js"],"OutletBoundary"]
 7:"$Sreact.suspense"
-0:{"buildId":"yDMDFbP6gMqvf4lpPMvv6","rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],null,["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"loading":null,"isPartial":false}
+0:{"buildId":"knYP-rB1p61AW79gR50Eo","rsc":["$","$1","c",{"children":[["$","$L2",null,{"Component":"$3","serverProvidedParams":{"searchParams":{},"params":{},"promises":["$@4","$@5"]}}],[["$","script","script-0",{"src":"/_next/static/chunks/d073d44c0adb2f4e.js","async":true}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],"loading":null,"isPartial":false}
 4:{}
 5:"$0:rsc:props:children:0:props:serverProvidedParams:params"
 8:null
